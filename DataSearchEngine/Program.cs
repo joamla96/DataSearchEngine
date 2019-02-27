@@ -48,9 +48,9 @@ namespace DataSearchEngine {
 
 			// Recurse into subdirectories of this directory.
 			string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
-			foreach(var subdirectory in subdirectoryEntries) {
+			Parallel.ForEach(subdirectoryEntries, (subdirectory) => {
 				ProcessDirectory(subdirectory, inputs);
-			}
+			});
 		}
 
 		// Insert logic for processing found files here.
