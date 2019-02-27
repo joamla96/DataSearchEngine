@@ -1,11 +1,15 @@
 ﻿using RestSharp;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DataSearchEngine {
 	class Program {
 		private static int Counter = 0;
+
+		private static Stopwatch timer;
 
 		private static readonly object _lock = new object();
 		static void Main(string[] args) {
@@ -13,6 +17,8 @@ namespace DataSearchEngine {
 
 			while (true) {
 				Counter = 0;
+				timer = new Stopwatch();
+
 				Console.WriteLine("Hello!");
 
 				Console.WriteLine("Please input search string:");
@@ -21,9 +27,13 @@ namespace DataSearchEngine {
 				Console.WriteLine("Please hold while searching...");
 				var inputs = input.Split(' ');
 
+				timer.Start();
 				p.ProcessDirectory("data/", inputs);
+				timer.Stop();
 
 				Console.WriteLine("Done, Results: " + Counter.ToString());
+				Console.WriteLine("Took {0} ms, {1} s", timer.ElapsedMilliseconds, timer.Elapsed);
+				Console.WriteLine("\nEnter to reset.");
 				Console.ReadLine();
 				Console.Clear();
 			}
