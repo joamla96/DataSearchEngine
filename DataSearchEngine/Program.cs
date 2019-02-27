@@ -55,6 +55,12 @@ namespace DataSearchEngine {
 
 		// Insert logic for processing found files here.
 		public static void ProcessFile(string path, string[] inputs) {
+
+			// TODO Ways to improve
+			// 1. Switch from http to pure tcp, less overhead?
+			// 2. Use some other type of messenger tools, rabbitmq?
+			// 3. THREAD it, many more threads! Thread it all.
+
 			var client = new RestClient("http://localhost:29697/api");
 
 			var request = new RestRequest("main");
