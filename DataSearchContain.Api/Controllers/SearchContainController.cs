@@ -20,10 +20,10 @@ namespace DataSearchContain.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Exist()
+        [HttpPost]
+        public async Task<IActionResult> Exist([FromBody] SearchQuarryDTO quarry)
         {
-            bool result = await _mediator.Send<bool>(new SearchContainCommand("cake"));
+            bool result = await _mediator.Send<bool>(new SearchContainCommand(quarry.Quarry));
 
             return new OkObjectResult(result);
         }
