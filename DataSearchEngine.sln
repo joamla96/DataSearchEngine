@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessFileService", "ProcessFileService\ProcessFileService.csproj", "{535F98DF-EA6A-432E-84C2-E8199344D6D0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loadbalancer", "Loadbalancer\Loadbalancer.csproj", "{A7D8D76E-91B3-4A65-BDF5-02AC950B1B36}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{B172E855-293F-4191-B00F-FC4C870BD77F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSearchContain.Api", "DataSearchContain.Api\DataSearchContain.Api.csproj", "{BC5D2136-D24C-4F4F-9CB6-0513C718D603}"
 EndProject
@@ -19,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSearchContain.Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSearchContain.Domain", "DataSearchContain.Domain\DataSearchContain.Domain.csproj", "{D6ED4F2A-F88C-4D64-B63B-1569B0546CAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{87B6C383-2639-44CF-A3AC-EA8A88C31953}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "WebClient\WebClient.csproj", "{87B6C383-2639-44CF-A3AC-EA8A88C31953}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient.Application", "WebClient.Application\WebClient.Application.csproj", "{8D3C9100-182F-46CD-92E3-F6051CBF1D91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.Application", "WebClient.Application\WebClient.Application.csproj", "{8D3C9100-182F-46CD-92E3-F6051CBF1D91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient.Infrastructure", "WebClient.Infrastructure\WebClient.Infrastructure.csproj", "{8E3142F0-732D-4240-8D2B-124992BBE98D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.Infrastructure", "WebClient.Infrastructure\WebClient.Infrastructure.csproj", "{8E3142F0-732D-4240-8D2B-124992BBE98D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient.UnitTest", "WebClient.UnitTest\WebClient.UnitTest.csproj", "{272DD715-BC56-4067-9177-C9995E90445B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.UnitTest", "WebClient.UnitTest\WebClient.UnitTest.csproj", "{272DD715-BC56-4067-9177-C9995E90445B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +29,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{535F98DF-EA6A-432E-84C2-E8199344D6D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{535F98DF-EA6A-432E-84C2-E8199344D6D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{535F98DF-EA6A-432E-84C2-E8199344D6D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{535F98DF-EA6A-432E-84C2-E8199344D6D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A7D8D76E-91B3-4A65-BDF5-02AC950B1B36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7D8D76E-91B3-4A65-BDF5-02AC950B1B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7D8D76E-91B3-4A65-BDF5-02AC950B1B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7D8D76E-91B3-4A65-BDF5-02AC950B1B36}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B172E855-293F-4191-B00F-FC4C870BD77F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B172E855-293F-4191-B00F-FC4C870BD77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B172E855-293F-4191-B00F-FC4C870BD77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B172E855-293F-4191-B00F-FC4C870BD77F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC5D2136-D24C-4F4F-9CB6-0513C718D603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC5D2136-D24C-4F4F-9CB6-0513C718D603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC5D2136-D24C-4F4F-9CB6-0513C718D603}.Release|Any CPU.ActiveCfg = Release|Any CPU
