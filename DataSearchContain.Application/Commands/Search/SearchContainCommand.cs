@@ -23,6 +23,18 @@ namespace DataSearchContain.Application.Commands.Search
     {
         public async Task<bool> Handle(SearchContainCommand request, CancellationToken cancellationToken)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            if (request.Request == null)
+                throw new ArgumentNullException(nameof(request.Request));
+
+            if (request.Request == "")
+                throw new ArgumentNullException(nameof(request.Request));
+
+            if (cancellationToken == null)
+                throw new ArgumentNullException(nameof(cancellationToken));
+
 
             return true;
         }
