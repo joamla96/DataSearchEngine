@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.UnitTest", "WebClient.UnitTest\WebClient.UnitTest.csproj", "{272DD715-BC56-4067-9177-C9995E90445B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagementAPI", "FileManagementAPI\FileManagementAPI.csproj", "{27FB4115-E1CA-4DE5-8C8A-58C331BC68B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSearchContain", "DataSearchContain", "{211C2887-2CD6-4C9A-83C6-EC20D9920C0E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient.Domain", "WebClient.Domain\WebClient.Domain.csproj", "{857A75F7-C22E-4B70-8F0D-3DB567C4144A}"
 EndProject
 Global
@@ -71,6 +75,10 @@ Global
 		{272DD715-BC56-4067-9177-C9995E90445B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{272DD715-BC56-4067-9177-C9995E90445B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{272DD715-BC56-4067-9177-C9995E90445B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27FB4115-E1CA-4DE5-8C8A-58C331BC68B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FB4115-E1CA-4DE5-8C8A-58C331BC68B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FB4115-E1CA-4DE5-8C8A-58C331BC68B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FB4115-E1CA-4DE5-8C8A-58C331BC68B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{857A75F7-C22E-4B70-8F0D-3DB567C4144A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{857A75F7-C22E-4B70-8F0D-3DB567C4144A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{857A75F7-C22E-4B70-8F0D-3DB567C4144A}.Release|Any CPU.ActiveCfg = Release|Any CPU
