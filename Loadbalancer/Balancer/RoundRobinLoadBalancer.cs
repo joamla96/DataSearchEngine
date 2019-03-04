@@ -8,7 +8,14 @@ namespace Loadbalancer.Balancer
     public class RoundRobinLoadBalancer
         : ILoadBalancer
     {
+		/// <summary>
+		/// List of services in the loadbalancer
+		/// </summary>
 		private List<IServiceOptions> serviceOptions = new List<IServiceOptions>();
+
+		/// <summary>
+		/// Counter for which item in the load balancer to access
+		/// </summary>
 		private int lastRequest = 0;
         public IServiceOptions Next()
         {
@@ -23,10 +30,18 @@ namespace Loadbalancer.Balancer
 			
         }
 
+		/// <summary>
+		/// Add an item to the list of possible services
+		/// </summary>
+		/// <param name="item">itme to add</param>
 		public void AddItem(IServiceOptions item) {
 			serviceOptions.Add(item);
 		}
 
+		/// <summary>
+		/// Remove item from the list of possible services
+		/// </summary>
+		/// <param name="item">item to remove</param>
 		public void RemoveItem(IServiceOptions item) {
 			serviceOptions.Remove(item);
 		}
