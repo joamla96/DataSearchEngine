@@ -8,3 +8,8 @@ script:
 - dotnet build
 - dotnet test WebClient.UnitTest/WebClient.UnitTest.csproj
 - dotnet test DataSearchContain.UnitTest/DataSearchContain.UnitTest.csproj
+
+branches:
+  only:
+  - master
+  - development
