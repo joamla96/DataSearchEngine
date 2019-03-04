@@ -11,9 +11,9 @@ namespace WebClient.UnitTest.DataGenrators.SearchContainDataGenerator
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[] { "cake" },
-            new object[] { "cokie" },
+            new object[] { "coo	kie" },
             new object[] { "chocolate" },
-            new object[] { "coffiee" },
+            new object[] { "coffee" },
 };
 
         public IEnumerator<object[]> GetEnumerator()

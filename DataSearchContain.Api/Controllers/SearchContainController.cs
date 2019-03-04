@@ -27,6 +27,15 @@ namespace DataSearchContain.Api.Controllers
 
             return new OkObjectResult(result);
         }
-        
-    }
+
+		[HttpPost]
+		public async Task<IActionResult> MatchingItems([FromBody] SearchQuarryDTO quarry)
+		{
+			int result = await _mediator.Send<int>(new SearchAmountCommand(quarry.Quarry));
+
+			return new OkObjectResult(result);
+		}
+
+
+	}
 }
