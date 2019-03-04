@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using DataSearchContain.Domain.UnitOfWork;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,6 +22,13 @@ namespace DataSearchContain.Application.Commands.Search
     public class SearchContainCommandHandler
         : IRequestHandler<SearchContainCommand, bool>
     {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public SearchContainCommandHandler(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        }
+
         public async Task<bool> Handle(SearchContainCommand request, CancellationToken cancellationToken)
         {
             if (request == null)
@@ -35,8 +43,8 @@ namespace DataSearchContain.Application.Commands.Search
             if (cancellationToken == null)
                 throw new ArgumentNullException(nameof(cancellationToken));
 
-
-            return true;
+            return 
+                await _unitOfWork.Repository.WordExist(request.Request);
         }
     }
 }
