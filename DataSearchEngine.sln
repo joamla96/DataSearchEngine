@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.UnitTest", "WebCl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagementAPI", "FileManagementAPI\FileManagementAPI.csproj", "{27FB4115-E1CA-4DE5-8C8A-58C331BC68B5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSearchContain", "DataSearchContain", "{211C2887-2CD6-4C9A-83C6-EC20D9920C0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC5D2136-D24C-4F4F-9CB6-0513C718D603} = {211C2887-2CD6-4C9A-83C6-EC20D9920C0E}
+		{E6C552EC-B2DF-4D21-AE1D-22F9D33EE66A} = {211C2887-2CD6-4C9A-83C6-EC20D9920C0E}
+		{16D5FBC5-16A6-4BA6-8D8E-C4302775B244} = {211C2887-2CD6-4C9A-83C6-EC20D9920C0E}
+		{7FC1768C-439A-420C-884F-6CA50DEDCF40} = {211C2887-2CD6-4C9A-83C6-EC20D9920C0E}
+		{D6ED4F2A-F88C-4D64-B63B-1569B0546CAA} = {211C2887-2CD6-4C9A-83C6-EC20D9920C0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0756BA10-ACF3-4E30-88B6-FFA5B9EA5EC4}
