@@ -17,9 +17,27 @@ namespace Loadbalancer.Balancer
         //move the pointer one everytime function is called
         //make sure we don't reach a point were we can't get and serviceOption
         //retrun from the list
+		private List<IServiceOptions> serviceOptions = new List<IServiceOptions>();
+		private int lastRequest = 0;
         public IServiceOptions Next()
         {
-            throw new NotImplementedException();
+            if(serviceOptions.Count == 0) 
+				throw new Exception("No Service Options Defined"); // TODO Custom Exception
+
+			++lastRequest;
+			if (lastRequest > serviceOptions.Count)
+				lastRequest = 0;
+
+			return serviceOptions[lastRequest];
+			
         }
+
+		public void AddItem(IServiceOptions item) {
+			serviceOptions.Add(item);
+		}
+
+		public void RemoveItem(IServiceOptions item) {
+			serviceOptions.Remove(item);
+		}
     }
 }
