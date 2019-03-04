@@ -1,0 +1,15 @@
+language: csharp
+mono: none
+dotnet: 2.0.0
+dist: trusty
+install:
+- dotnet restore
+script:
+- dotnet build
+- dotnet test WebClient.UnitTest/WebClient.UnitTest.csproj
+- dotnet test DataSearchContain.UnitTest/DataSearchContain.UnitTest.csproj
+
+branches:
+  only:
+  - master
+  - development
