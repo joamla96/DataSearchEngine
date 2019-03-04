@@ -8,15 +8,6 @@ namespace Loadbalancer.Balancer
     public class RoundRobinLoadBalancer
         : ILoadBalancer
     {
-        //TODO
-        //make list of IServiceOptions 
-        //Add and remove functions to the list
-
-        //TODO
-        //get a pointer to to check where we were last
-        //move the pointer one everytime function is called
-        //make sure we don't reach a point were we can't get and serviceOption
-        //retrun from the list
 		private List<IServiceOptions> serviceOptions = new List<IServiceOptions>();
 		private int lastRequest = 0;
         public IServiceOptions Next()
