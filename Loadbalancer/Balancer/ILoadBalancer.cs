@@ -13,5 +13,18 @@ namespace Loadbalancer.Balancer
         /// </summary>
         /// <returns></returns>
         IServiceOptions Next();
+
+		/// <summary>
+		/// Add a service to the load balancer
+		/// </summary>
+		/// <param name="item">The service to add</param>
+		void AddItem(IServiceOptions item);
+
+
+		/// <summary>
+		/// Remove a service from the load balancer
+		/// </summary>
+		/// <param name="item">The item to remove</param>
+		void RemoveItem(IServiceOptions item);
     }
 }
