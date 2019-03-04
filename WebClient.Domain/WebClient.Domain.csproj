@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\WebClient.Domain\WebClient.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

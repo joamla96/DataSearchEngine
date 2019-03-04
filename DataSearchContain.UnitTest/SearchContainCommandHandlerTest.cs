@@ -1,4 +1,5 @@
 ﻿using DataSearchContain.Application.Commands.Search;
+using DataSearchContain.Infrastructure.UnitOfWork;
 using DataSearchContain.UnitTest.DataGenrators.SearchContainDataGenerator;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace DataSearchContain.UnitTest
         {
             var token = new CancellationToken();
             var handler =
-                new SearchContainCommandHandler().Handle(null, token);
+                new SearchContainCommandHandler(
+                    new UnitOfWork()
+                    ).Handle(null, token);
 
             await Assert.ThrowsAnyAsync<ArgumentNullException>(() =>
                 handler);
@@ -30,7 +33,9 @@ namespace DataSearchContain.UnitTest
             var command = new SearchContainCommand(request);
             var token = new CancellationToken();
             var handler =
-                new SearchContainCommandHandler().Handle(command, token);
+                new SearchContainCommandHandler(
+                    new UnitOfWork()
+                    ).Handle(command, token);
 
             await Assert.ThrowsAnyAsync<ArgumentNullException>(() =>
                 handler);
@@ -43,7 +48,9 @@ namespace DataSearchContain.UnitTest
             var command = new SearchContainCommand(request);
             var token = new CancellationToken();
             var handler =
-                new SearchContainCommandHandler().Handle(null, token);
+                new SearchContainCommandHandler(
+                    new UnitOfWork()
+                    ).Handle(null, token);
 
             await Assert.ThrowsAnyAsync<ArgumentNullException>(() =>
                 handler);

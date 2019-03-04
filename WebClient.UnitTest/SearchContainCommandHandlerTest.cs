@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WebClient.Application.Commands.SearchContains;
+using WebClient.Infrastructure.UnitOfWorks;
 using WebClient.UnitTest.DataGenrators.SearchContainDataGenerator;
 using Xunit;
 
@@ -17,7 +18,9 @@ namespace WebClient.UnitTest
         {
             var token = new CancellationToken();
             var handler =
-                new SearchContainCommandHandler().Handle(null, token);
+                new SearchContainCommandHandler(
+                    new UnitOfWork()
+                    ).Handle(null, token);
 
             await Assert.ThrowsAnyAsync<ArgumentNullException>(() =>
                 handler);
@@ -30,7 +33,9 @@ namespace WebClient.UnitTest
             var command = new SearchContainCommand(request);
             var token = new CancellationToken();
             var handler =
-                new SearchContainCommandHandler().Handle(command, token);
+                new SearchContainCommandHandler(
+                    new UnitOfWork()
+                    ).Handle(command, token);
 
             await Assert.ThrowsAnyAsync<ArgumentNullException>(() =>
                 handler);
@@ -43,7 +48,9 @@ namespace WebClient.UnitTest
             var command = new SearchContainCommand(request);
             var token = new CancellationToken();
             var handler =
-                new SearchContainCommandHandler().Handle(null, token);
+                new SearchContainCommandHandler(
+                    new UnitOfWork()
+                    ).Handle(null, token);
 
             await Assert.ThrowsAnyAsync<ArgumentNullException>(() =>
                 handler);

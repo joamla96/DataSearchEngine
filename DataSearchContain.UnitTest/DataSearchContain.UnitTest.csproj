@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataSearchContain.Application\DataSearchContain.Application.csproj" />
+    <ProjectReference Include="..\DataSearchContain.Infrastructure\DataSearchContain.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
