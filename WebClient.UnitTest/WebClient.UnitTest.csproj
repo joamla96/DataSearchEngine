@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebClient.Application\WebClient.Application.csproj" />
+    <ProjectReference Include="..\WebClient.Infrastructure\WebClient.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
