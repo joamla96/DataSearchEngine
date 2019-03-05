@@ -27,7 +27,7 @@ namespace DataSearchContain.Api.Controllers
                 return new BadRequestResult();
             if (quarry == null)
                 return new BadRequestObjectResult(nameof(quarry));
-            if(quarry.Quarry == null || quarry.Quarry == "")
+            if(string.IsNullOrWhiteSpace(quarry.Quarry))
                 return new BadRequestObjectResult(nameof(quarry));
 
             bool result = await _mediator.Send<bool>(new SearchContainCommand(quarry.Quarry));
