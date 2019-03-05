@@ -23,6 +23,13 @@ namespace DataSearchContain.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Exist([FromBody] SearchQuarryDTO quarry)
         {
+            if (!ModelState.IsValid)
+                return new BadRequestResult();
+            if (quarry == null)
+                return new BadRequestObjectResult(nameof(quarry));
+            if(quarry.Quarry == null || quarry.Quarry == "")
+                return new BadRequestObjectResult(nameof(quarry));
+
             bool result = await _mediator.Send<bool>(new SearchContainCommand(quarry.Quarry));
 
             return new OkObjectResult(result);
