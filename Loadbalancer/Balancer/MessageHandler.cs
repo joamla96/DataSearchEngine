@@ -1,4 +1,5 @@
 ﻿using EasyNetQ;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Loadbalancer.Balancer {
 		public MessageHandler(ILoadBalancer loadBalancer) {
 			this.loadBalancer = loadBalancer;
 			Task.Factory.StartNew(Start);
+			Task.Factory.StartNew(InstanceDCHandler);
 		}
 
 		private void Start() {
@@ -28,12 +30,32 @@ namespace Loadbalancer.Balancer {
 			}
 		}
 
+		private void InstanceDCHandler() {
+			while(true) {
+				Thread.Sleep(1500);
+				ExecuteHealthCheck();
+			}
+		}
+
+		private void ExecuteHealthCheck() {
+			var serviceOptions = loadBalancer.GetInstances();
+
+			Parallel.ForEach(serviceOptions, (option) => {
+				var client = new RestClient(new Uri(option.Host.ToUriComponent()));
+				var request = new RestRequest("Healthcheck", Method.GET);
+
+				var result = client.Execute(request);
+
+				if (result.ResponseStatus == ResponseStatus.TimedOut)
+					OnInstanceDC(option);
+			});
+		}
+
 		private void OnNewInstance(IServiceOptions instance) {
 			loadBalancer.AddInstance(instance);
 		}
 
-		private void OnInstanceDC(string serviceId) {
-			var service = loadBalancer.GetInstances().First(x => x.ServiceId == serviceId);
+		private void OnInstanceDC(IServiceOptions service) {
 			loadBalancer.RemoveInstance(service);
 		}
 	}
