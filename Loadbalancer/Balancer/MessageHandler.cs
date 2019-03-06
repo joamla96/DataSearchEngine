@@ -64,7 +64,7 @@ namespace Loadbalancer.Balancer {
 
 
 		private void OnInstanceDC(IServiceOptions service) {
-			Log.Write("loadbalancer", String.Format("Instance {0} died", serviceId));
+			Log.Write("loadbalancer", String.Format("Instance {0} died", service.ServiceId));
 			loadBalancer.RemoveInstance(service);
 		}
 	}
