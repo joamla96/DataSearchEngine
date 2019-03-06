@@ -21,12 +21,17 @@ namespace Loadbalancer.Controllers
 			this.loadBalancer = loadBalancer;
 		}
 		
+		[HttpGet]
+		public IActionResult Get() {
+			return Ok(loadBalancer.Next());
+		}
+
         [HttpPost]
-        public IRestResponse Exists([FromBody]SearchQuerryDTO item)
+        public IRestResponse Post([FromBody]SearchQuerryDTO item)
         {
 			var server = this.loadBalancer.Next();
-			var client = new RestClient(server.ToString());
-			var request = new RestRequest(Method.POST);
+			var client = new RestClient(server.Host.ToUriComponent());
+			var request = new RestRequest(server.PathBase, Method.POST);
 			request.AddJsonBody(item);
 
 			return client.Execute(request);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyNetQ;
 using Loadbalancer.Balancer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,7 @@ namespace Loadbalancer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddSingleton<IBus>(RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false"));
 			services.AddSingleton<ILoadBalancer, RoundRobinLoadBalancer>();
         }
 

@@ -10,19 +10,17 @@ namespace Loadbalancer.Balancer
 	public class RoundRobinLoadBalancer
 		: ILoadBalancer
 	{
-		private IBus bus;
 		private ManualResetEvent _resetEvent = new ManualResetEvent(false);
 
-		public RoundRobinLoadBalancer()
+		public RoundRobinLoadBalancer(IBus bus)
 		{
-			Task.Factory.StartNew(Start);
+			Task.Factory.StartNew(() => Start(bus));
 		}
 
-		private void Start()
+		private void Start(IBus bus)
 		{
-			using (bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false"))
+			using (bus)
 			{
-
 				// Listen for order request messages from customers
 				bus.Receive<IServiceOptions>("DataSearchContainInstances", input => OnNewInstance(input));
 
