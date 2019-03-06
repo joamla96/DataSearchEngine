@@ -1,5 +1,6 @@
 ﻿using EasyNetQ;
 using RestSharp;
+﻿using Common.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,17 @@ namespace Loadbalancer.Balancer {
 		private ILoadBalancer loadBalancer;
 		private IBus bus;
 
+		private Log Log;
+
 		// TODO Handle disconnected instances
 
-		public MessageHandler(ILoadBalancer loadBalancer) {
+		public MessageHandler(ILoadBalancer loadBalancer, Log log) {
 			this.loadBalancer = loadBalancer;
+			this.Log = log;
+
 			Task.Factory.StartNew(Start);
 			Task.Factory.StartNew(InstanceDCHandler);
+
 		}
 
 		private void Start() {
@@ -52,10 +58,13 @@ namespace Loadbalancer.Balancer {
 		}
 
 		private void OnNewInstance(IServiceOptions instance) {
+			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.ServiceId));
 			loadBalancer.AddInstance(instance);
 		}
 
+
 		private void OnInstanceDC(IServiceOptions service) {
+			Log.Write("loadbalancer", String.Format("Instance {0} died", serviceId));
 			loadBalancer.RemoveInstance(service);
 		}
 	}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Logger;
 using EasyNetQ;
 using Loadbalancer.Balancer;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +32,8 @@ namespace Loadbalancer
 			services.AddSingleton<ILoadBalancer, RoundRobinLoadBalancer>();
 
 			services.AddSingleton<MessageHandler>();
+
+			services.AddSingleton<Log>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

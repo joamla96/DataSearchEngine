@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.Domain", "WebClie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient.Infrastructure", "WebClient.Infrastructure\WebClient.Infrastructure.csproj", "{77F84084-1704-4177-A29F-B17D69FB2740}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{71656FEE-20F6-4430-9975-51D3A528911F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6CC14DF5-12F7-4E06-8CAE-0CAE3D63E36E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,9 +87,16 @@ Global
 		{77F84084-1704-4177-A29F-B17D69FB2740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F84084-1704-4177-A29F-B17D69FB2740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F84084-1704-4177-A29F-B17D69FB2740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71656FEE-20F6-4430-9975-51D3A528911F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71656FEE-20F6-4430-9975-51D3A528911F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71656FEE-20F6-4430-9975-51D3A528911F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71656FEE-20F6-4430-9975-51D3A528911F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{71656FEE-20F6-4430-9975-51D3A528911F} = {6CC14DF5-12F7-4E06-8CAE-0CAE3D63E36E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0756BA10-ACF3-4E30-88B6-FFA5B9EA5EC4}
