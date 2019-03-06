@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebClient.Application.Commands;
-using WebClient.Domain.UnitOfWork;
-using WebClient.Infrastructure.UnitOfWorks;
+using WebClient.Domain.Gateway;
+using WebClient.Infrastructure.Gateway;
 
 namespace WebClient
 {
@@ -30,10 +30,8 @@ namespace WebClient
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddTransient<IUnitOfWork,UnitOfWork>();
+            services.AddHttpClient<IGateway, SearchContainGateway>();
 
             services.AddMediatR(typeof(Command));
         }
