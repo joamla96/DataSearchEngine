@@ -27,14 +27,22 @@ namespace Loadbalancer.Controllers
 		}
 
         [HttpPost]
-        public IRestResponse Post([FromBody]SearchQuerryDTO item)
+        public IActionResult Post([FromBody]SearchQuerryDTO item)
         {
+			if (item.Querry == null)
+				return BadRequest();
+
 			var server = this.loadBalancer.Next();
 			var client = new RestClient(server.Host.ToUriComponent());
 			var request = new RestRequest(server.PathBase, Method.POST);
 			request.AddJsonBody(item);
 
-			return client.Execute(request);
+			var result = client.Execute(request);
+			
+			if(!result.IsSuccessful) 
+				return StatusCode((int)result.StatusCode, result.StatusDescription);
+
+			return Ok(result.Content);
 		}
     }
 }
