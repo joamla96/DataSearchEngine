@@ -42,7 +42,7 @@ namespace Loadbalancer.Controllers
 			request.AddJsonBody(item);
 
 			var timera = Stopwatch.StartNew();
-			var result = client.Execute(request);
+			var result = client.Execute(request); // IDEA: In case of exception or other, repeat request to another service?
 			timera.Stop();
 
 			Log.Write("loadbalancer", String.Format("Request to service {0} took {1} ms", server.ServiceId, timera.ElapsedMilliseconds));
