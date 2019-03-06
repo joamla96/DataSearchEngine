@@ -31,6 +31,14 @@ namespace DataSearchContain.Api.Controllers
 		[HttpPost]
 		public async Task<IActionResult> MatchingItems([FromBody] SearchQuarryDTO quarry)
 		{
+			if (!ModelState.IsValid)
+				return new BadRequestResult();
+			if (quarry == null)
+				return new BadRequestObjectResult(nameof(quarry));
+
+			if (String.IsNullOrWhiteSpace(quarry.Quarry))
+				return new BadRequestObjectResult(nameof(quarry.Quarry));
+
 			int result = await _mediator.Send<int>(new SearchAmountCommand(quarry.Quarry));
 
 			return new OkObjectResult(result);
