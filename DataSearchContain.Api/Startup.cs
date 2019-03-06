@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using DataSearchContain.Application.Commands;
 using DataSearchContain.Domain.UnitOfWork;
 using DataSearchContain.Infrastructure.UnitOfWork;
+using EasyNetQ;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +25,12 @@ namespace DataSearchContain.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+			IPAddress[] addresslist = Dns.GetHostAddresses(Dns.GetHostName());
+			IBus bus;
+			using(bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false")) {
+				//bus.Publish()
+			}
         }
 
         public IConfiguration Configuration { get; }
