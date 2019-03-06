@@ -4,7 +4,17 @@ using System.Text;
 
 namespace Logger {
 	public class LogEntryDTO {
-		public string ServiceName;
+		private string _serviceName;
+
+		public string ServiceName {
+			get {
+				return "LOG_" + this._serviceName;
+			}
+			set {
+				this._serviceName = value;
+			}
+		}
+
 		public string Message;
 	}
 }
