@@ -8,7 +8,12 @@ namespace DataSearchContain.Infrastructure.UnitOfWork.Reposetory
 {
     public class Repository : IRepository
     {
-        public async Task<bool> WordExist(string word)
+		public Task<int> MatchingItems(string word)
+		{
+			throw new NotImplementedException("This is not working right now");
+		}
+
+		public async Task<bool> WordExist(string word)
         {
             return true;
         }
