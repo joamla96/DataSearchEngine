@@ -34,10 +34,7 @@ namespace WebClient.Application.Commands.SearchContains
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            if (request.Request == null)
-                throw new ArgumentNullException(nameof(request.Request));
-
-            if (request.Request == "")
+            if (string.IsNullOrWhiteSpace(request.Request))
                 throw new ArgumentNullException(nameof(request.Request));
 
             if (cancellationToken == null)
