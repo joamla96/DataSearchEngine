@@ -13,5 +13,10 @@ namespace Loadbalancer.Balancer
         /// </summary>
         /// <returns></returns>
         IServiceOptions Next();
+
+		void AddInstance(IServiceOptions item);
+		void RemoveInstance(IServiceOptions item);
+
+		IEnumerable<IServiceOptions> GetInstances();
     }
 }
