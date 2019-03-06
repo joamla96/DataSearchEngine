@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using DataSearchContain.Api.Models;
 using DataSearchContain.Application.Commands;
 using DataSearchContain.Domain.UnitOfWork;
 using DataSearchContain.Infrastructure.UnitOfWork;
@@ -28,8 +29,13 @@ namespace DataSearchContain.Api
 
 			IPAddress[] addresslist = Dns.GetHostAddresses(Dns.GetHostName());
 			IBus bus;
+			var me = new ServiceOption() {
+				//Host = addresslist[]??,
+				PathBase = new Microsoft.AspNetCore.Http.PathString("SearchContain"),
+			};
+
 			using(bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false")) {
-				//bus.Publish()
+				bus.Send("DataSearchContainInstances", me);
 			}
         }
 

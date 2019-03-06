@@ -9,23 +9,23 @@ namespace DataSearchContain.Api.Models {
 		/// <summary>
 		/// Destination uri scheme
 		/// </summary>
-		string Scheme { get; set; }
+		public string Scheme { get; set; }
 
 		/// <summary>
 		/// Destination uri host
 		/// </summary>
-		HostString Host { get; set; }
+		public HostString Host { get; set; }
 
 		/// <summary>
 		/// Destination uri path base to which current Path will be appended
 		/// </summary>
-		PathString PathBase { get; set; }
+		public PathString PathBase { get; set; }
 
 		/// <summary>
 		/// Query string parameters to append to each request
 		/// </summary>
-		QueryString AppendQuery { get; set; }
+		public QueryString AppendQuery { get; set; }
 
-		string ServiceId { get; set;  }
+		public string ServiceId { get; set;  }
 	}
 }
