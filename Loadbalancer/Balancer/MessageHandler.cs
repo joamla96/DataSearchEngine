@@ -1,5 +1,6 @@
+﻿using EasyNetQ;
+using RestSharp;
 ﻿using Common.Logger;
-using EasyNetQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace Loadbalancer.Balancer {
 			this.Log = log;
 
 			Task.Factory.StartNew(Start);
+			Task.Factory.StartNew(InstanceDCHandler);
 
 		}
 
@@ -34,15 +36,35 @@ namespace Loadbalancer.Balancer {
 			}
 		}
 
+		private void InstanceDCHandler() {
+			while(true) {
+				Thread.Sleep(1500);
+				ExecuteHealthCheck();
+			}
+		}
+
+		private void ExecuteHealthCheck() {
+			var serviceOptions = loadBalancer.GetInstances();
+
+			Parallel.ForEach(serviceOptions, (option) => {
+				var client = new RestClient(new Uri(option.Host.ToUriComponent()));
+				var request = new RestRequest("Healthcheck", Method.GET);
+
+				var result = client.Execute(request);
+
+				if (result.ResponseStatus == ResponseStatus.TimedOut)
+					OnInstanceDC(option);
+			});
+		}
+
 		private void OnNewInstance(IServiceOptions instance) {
 			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.ServiceId));
 			loadBalancer.AddInstance(instance);
 		}
 
-		private void OnInstanceDC(string serviceId) {
-			Log.Write("loadbalancer", String.Format("Instance {0} died", serviceId));
 
-			var service = loadBalancer.GetInstances().First(x => x.ServiceId == serviceId);
+		private void OnInstanceDC(IServiceOptions service) {
+			Log.Write("loadbalancer", String.Format("Instance {0} died", service.ServiceId));
 			loadBalancer.RemoveInstance(service);
 		}
 	}
