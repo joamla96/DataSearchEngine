@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DataSearchContain.Infrastructure.UnitOfWork.Reposetory
@@ -10,11 +11,13 @@ namespace DataSearchContain.Infrastructure.UnitOfWork.Reposetory
     {
 		public Task<int> MatchingItems(string word)
 		{
-			throw new NotImplementedException("This is not working right now");
+			Thread.Sleep(10000);
+			return Task.FromResult(24);
 		}
 
 		public async Task<bool> WordExist(string word)
         {
+			Thread.Sleep(5000);
             return true;
         }
     }
