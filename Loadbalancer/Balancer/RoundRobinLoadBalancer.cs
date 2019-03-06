@@ -10,35 +10,6 @@ namespace Loadbalancer.Balancer
 	public class RoundRobinLoadBalancer
 		: ILoadBalancer
 	{
-		private ManualResetEvent _resetEvent = new ManualResetEvent(false);
-
-		public RoundRobinLoadBalancer(IBus bus)
-		{
-			Task.Factory.StartNew(() => Start(bus));
-		}
-
-		private void Start(IBus bus)
-		{
-			using (bus)
-			{
-				// Listen for order request messages from customers
-				bus.Receive<IServiceOptions>("DataSearchContainInstances", input => OnNewInstance(input));
-
-				_resetEvent.WaitOne(); // Block thread
-			}
-		}
-
-		private void OnNewInstance(IServiceOptions instance)
-		{
-			this.serviceOptions.Add(instance);
-		}
-
-		private void OnInstanceDC(string serviceId)
-		{
-			var service = serviceOptions.First(x => x.ServiceId == serviceId);
-			serviceOptions.Remove(service);
-		}
-
 		/// <summary>
 		/// List of services in the loadbalancer
 		/// </summary>
@@ -65,7 +36,7 @@ namespace Loadbalancer.Balancer
 		/// Add an item to the list of possible services
 		/// </summary>
 		/// <param name="item">itme to add</param>
-		public void AddItem(IServiceOptions item)
+		public void AddInstance(IServiceOptions item)
 		{
 			serviceOptions.Add(item);
 		}
@@ -74,9 +45,13 @@ namespace Loadbalancer.Balancer
 		/// Remove item from the list of possible services
 		/// </summary>
 		/// <param name="item">item to remove</param>
-		public void RemoveItem(IServiceOptions item)
+		public void RemoveInstance(IServiceOptions item)
 		{
 			serviceOptions.Remove(item);
+		}
+
+		public IEnumerable<IServiceOptions> GetInstances() {
+			return serviceOptions.ToList();
 		}
 	}
 }
