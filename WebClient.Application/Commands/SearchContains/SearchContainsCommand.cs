@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebClient.Domain.UnitOfWork;
+using WebClient.Domain.Gateway;
 
 namespace WebClient.Application.Commands.SearchContains
 {
@@ -22,11 +22,11 @@ namespace WebClient.Application.Commands.SearchContains
     public class SearchContainCommandHandler
         : IRequestHandler<SearchContainCommand, List<string>>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IGateway _Gateway;
 
-        public SearchContainCommandHandler(IUnitOfWork unitOfWork)
+        public SearchContainCommandHandler(IGateway gateway)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _Gateway = gateway ?? throw new ArgumentNullException(nameof(gateway));
         }
 
         public async Task<List<string>> Handle(SearchContainCommand request, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ namespace WebClient.Application.Commands.SearchContains
             if (cancellationToken == null)
                 throw new ArgumentNullException(nameof(cancellationToken));
 
-            var result = await _unitOfWork.Repository.WordExist(request.Request);
+            var result = await _Gateway.WordExist(request.Request);
             return new List<string>() { request.Request, result.ToString()};
         }
     }
