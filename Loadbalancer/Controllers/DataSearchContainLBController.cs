@@ -18,11 +18,13 @@ namespace Loadbalancer.Controllers
     {
 		private ILoadBalancer loadBalancer;
 		private Log Log;
+		private MessageHandler msgHandler;
 
-		public DataSearchContainLBController(ILoadBalancer loadBalancer, Log log)
+		public DataSearchContainLBController(ILoadBalancer loadBalancer, Log log, MessageHandler messageHandler)
 		{
 			this.loadBalancer = loadBalancer;
 			this.Log = log;
+			this.msgHandler = messageHandler;
 		}
 		
 		[HttpGet]

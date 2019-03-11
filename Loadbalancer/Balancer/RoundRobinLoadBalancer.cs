@@ -24,11 +24,10 @@ namespace Loadbalancer.Balancer
 			if (serviceOptions.Count == 0)
 				throw new Exception("No Service Options Defined"); // TODO Custom Exception
 
-			++lastRequest;
-			if (lastRequest > serviceOptions.Count)
+			if (lastRequest >= serviceOptions.Count)
 				lastRequest = 0;
 
-			return serviceOptions[lastRequest];
+			return serviceOptions[lastRequest++];
 
 		}
 

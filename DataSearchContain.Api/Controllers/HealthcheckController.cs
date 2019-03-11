@@ -15,7 +15,7 @@ namespace DataSearchContain.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-			return Ok(); // Yes. Do no work. Only to check if the instance is online.
+			return Ok("I AM ALIVE"); // Yes. Do no work. Only to check if the instance is online.
         }
     
     }

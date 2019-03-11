@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Loadbalancer.Balancer {
 	public class MessageHandler {
+
 		private ManualResetEvent _resetEvent = new ManualResetEvent(false);
 
 		private ILoadBalancer loadBalancer;
@@ -16,7 +17,7 @@ namespace Loadbalancer.Balancer {
 
 		private Log Log;
 
-		// TODO Handle disconnected instances
+
 
 		public MessageHandler(ILoadBalancer loadBalancer, Log log) {
 			this.loadBalancer = loadBalancer;
@@ -28,9 +29,9 @@ namespace Loadbalancer.Balancer {
 		}
 
 		private void Start() {
-			using (bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false")) {
+			using (bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;username=user;password=user")) {
 				// Listen for order request messages from customers
-				bus.Receive<IServiceOptions>("DataSearchContainInstances", input => OnNewInstance(input));
+				bus.Receive<Uri>("DataSearchContainInstances", input => OnNewInstance(input));
 
 				_resetEvent.WaitOne(); // Block thread
 			}
@@ -57,7 +58,9 @@ namespace Loadbalancer.Balancer {
 			});
 		}
 
-		private void OnNewInstance(IServiceOptions instance) {
+		private void OnNewInstance(Uri instanceUri) {
+			var instance = new ServiceOptions(instanceUri);
+
 			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.ServiceId));
 			loadBalancer.AddInstance(instance);
 		}
