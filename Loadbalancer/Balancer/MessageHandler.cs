@@ -45,36 +45,53 @@ namespace Loadbalancer.Balancer {
 		}
 
 		private void ExecuteHealthCheck() {
-			Log.Write("loadbalancer_hc", "Executing HealthCheck");
+			//Log.Write("loadbalancer_hc", "Executing HealthCheck");
 			var serviceOptions = loadBalancer.GetInstances();
 
-			foreach(var option in serviceOptions) { 
-				Log.Write("loadbalancer_hc", "Checking " + option.ServiceId);
-				var client = new RestClient(new Uri(option.Host.ToUriComponent()));
-				client.Timeout = 3000;
-				var request = new RestRequest("Healthcheck", Method.GET);
-
-				var result = client.Execute(request);
-
-				if (result.ResponseStatus == ResponseStatus.TimedOut) {
-					Log.Write("loadbalancer_hc", option.ServiceId + " timed out.");
+			foreach(var option in serviceOptions) {
+				if(!this.Healthcheck(option))
+				{
 					OnInstanceDC(option);
 				}
-
-				Log.Write("loadbalancer_hc", option.ServiceId + " is still alive.");
 			}
 		}
 
-		private void OnNewInstance(Uri instanceUri) {
-			var instance = new ServiceOptions(instanceUri);
+		private bool Healthcheck(Uri option)
+		{
+			Log.Write("loadbalancer_hc", "Checking " + option.Host);
+			string basePath = option.Scheme + "://" + option.Host + ":" + option.Port;
+			var client = new RestClient(basePath);
+			client.Timeout = 3000;
+			var request = new RestRequest("api/Healthcheck", Method.GET);
 
-			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.ServiceId));
+			var result = client.Execute(request);
+
+			if (!result.IsSuccessful)
+			{
+				Log.Write("loadbalancer_hc", option.Host + " timed out.");
+				return false;
+			}
+
+			Log.Write("loadbalancer_hc", option.Host + " is still alive.");
+			return true;
+		}
+
+		private void OnNewInstance(Uri instance) {
+
+			if(!this.Healthcheck(instance))
+			{
+				Thread.Sleep(5000);
+				if (!this.Healthcheck(instance))
+					return;
+			}
+
+			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.Host));
 			loadBalancer.AddInstance(instance);
 		}
 
 
-		private void OnInstanceDC(IServiceOptions service) {
-			Log.Write("loadbalancer", String.Format("Instance {0} died", service.ServiceId));
+		private void OnInstanceDC(Uri service) {
+			Log.Write("loadbalancer", String.Format("Instance {0} died", service.Host));
 			loadBalancer.RemoveInstance(service);
 		}
 	}

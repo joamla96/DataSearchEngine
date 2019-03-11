@@ -12,11 +12,11 @@ namespace Loadbalancer.Balancer
         /// to receive an request.
         /// </summary>
         /// <returns></returns>
-        IServiceOptions Next();
+        Uri Next();
 
-		void AddInstance(IServiceOptions item);
-		void RemoveInstance(IServiceOptions item);
+		void AddInstance(Uri item);
+		void RemoveInstance(Uri item);
 
-		IEnumerable<IServiceOptions> GetInstances();
+		IEnumerable<Uri> GetInstances();
     }
 }

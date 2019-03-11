@@ -26,7 +26,7 @@ namespace LogReader {
 		}
 
 		private void msgReader(Logger.LogEntryDTO input) {
-			Console.WriteLine("Service: {0} - Message: {1}", input.ServiceName, input.Message);
+			Console.WriteLine("({2})Service: {0} - Message: {1}", input.ServiceName, input.Message, DateTime.Now);
 		}
 
 	}

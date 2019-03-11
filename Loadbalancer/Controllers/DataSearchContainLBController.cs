@@ -39,15 +39,15 @@ namespace Loadbalancer.Controllers
 				return BadRequest();
 
 			var server = this.loadBalancer.Next();
-			var client = new RestClient(server.Host.ToUriComponent());
-			var request = new RestRequest(server.PathBase, Method.POST);
+			var client = new RestClient(server);
+			var request = new RestRequest(server.PathAndQuery, Method.POST);
 			request.AddJsonBody(item);
 
 			var timera = Stopwatch.StartNew();
 			var result = client.Execute(request); // IDEA: In case of exception or other, repeat request to another service?
 			timera.Stop();
 
-			Log.Write("loadbalancer", String.Format("Request to service {0} took {1} ms", server.ServiceId, timera.ElapsedMilliseconds));
+			Log.Write("loadbalancer", String.Format("Request to service {0} took {1} ms", server.Host, timera.ElapsedMilliseconds));
 
 			if(!result.IsSuccessful) 
 				return StatusCode((int)result.StatusCode, result.StatusDescription);
