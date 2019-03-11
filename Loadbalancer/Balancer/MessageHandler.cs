@@ -45,17 +45,24 @@ namespace Loadbalancer.Balancer {
 		}
 
 		private void ExecuteHealthCheck() {
+			Log.Write("loadbalancer_hc", "Executing HealthCheck");
 			var serviceOptions = loadBalancer.GetInstances();
 
-			Parallel.ForEach(serviceOptions, (option) => {
+			foreach(var option in serviceOptions) { 
+				Log.Write("loadbalancer_hc", "Checking " + option.ServiceId);
 				var client = new RestClient(new Uri(option.Host.ToUriComponent()));
+				client.Timeout = 3000;
 				var request = new RestRequest("Healthcheck", Method.GET);
 
 				var result = client.Execute(request);
 
-				if (result.ResponseStatus == ResponseStatus.TimedOut)
+				if (result.ResponseStatus == ResponseStatus.TimedOut) {
+					Log.Write("loadbalancer_hc", option.ServiceId + " timed out.");
 					OnInstanceDC(option);
-			});
+				}
+
+				Log.Write("loadbalancer_hc", option.ServiceId + " is still alive.");
+			}
 		}
 
 		private void OnNewInstance(Uri instanceUri) {
