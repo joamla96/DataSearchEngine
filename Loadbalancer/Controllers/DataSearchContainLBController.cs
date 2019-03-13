@@ -33,7 +33,7 @@ namespace Loadbalancer.Controllers
 		}
 
         [HttpPost]
-        public IActionResult Post([FromBody]SearchQuerryDTO item)
+        public async Task<IActionResult> Post([FromBody]SearchQuerryDTO item)
         {
 			if (item.Querry == null)
 				return BadRequest();
@@ -44,7 +44,7 @@ namespace Loadbalancer.Controllers
 			request.AddJsonBody(item);
 
 			var timera = Stopwatch.StartNew();
-			var result = client.Execute(request); // IDEA: In case of exception or other, repeat request to another service?
+			var result = await client.ExecuteTaskAsync(request); // IDEA: In case of exception or other, repeat request to another service?
 			timera.Stop();
 
 			Log.Write("loadbalancer", String.Format("Request to service {0} took {1} ms", server.Host, timera.ElapsedMilliseconds));
