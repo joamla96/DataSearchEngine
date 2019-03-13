@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataSearchContain.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class SearchContainController : Controller
     {
@@ -21,7 +21,7 @@ namespace DataSearchContain.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Exist([FromBody] SearchQuarryDTO quarry)
+        public async Task<IActionResult> Post([FromBody] SearchQuarryDTO quarry)
         {
             if (!ModelState.IsValid)
                 return new BadRequestResult();
@@ -35,21 +35,21 @@ namespace DataSearchContain.Api.Controllers
             return new OkObjectResult(result);
         }
 
-		[HttpPost]
-		public async Task<IActionResult> MatchingItems([FromBody] SearchQuarryDTO quarry)
-		{
-			if (!ModelState.IsValid)
-				return new BadRequestResult();
-			if (quarry == null)
-				return new BadRequestObjectResult(nameof(quarry));
+		//[HttpPost]
+		//public async Task<IActionResult> MatchingItems([FromBody] SearchQuarryDTO quarry)
+		//{
+		//	if (!ModelState.IsValid)
+		//		return new BadRequestResult();
+		//	if (quarry == null)
+		//		return new BadRequestObjectResult(nameof(quarry));
 
-			if (String.IsNullOrWhiteSpace(quarry.Quarry))
-				return new BadRequestObjectResult(nameof(quarry.Quarry));
+		//	if (String.IsNullOrWhiteSpace(quarry.Quarry))
+		//		return new BadRequestObjectResult(nameof(quarry.Quarry));
 
-			int result = await _mediator.Send<int>(new SearchAmountCommand(quarry.Quarry));
+		//	int result = await _mediator.Send<int>(new SearchAmountCommand(quarry.Quarry));
 
-			return new OkObjectResult(result);
-		}
+		//	return new OkObjectResult(result);
+		//}
 
 
 	}
