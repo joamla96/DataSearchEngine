@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using WebClient.Domain.Gateway;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace WebClient.Infrastructure.Gateway
-{
-    public class SearchContainGateway : IGateway
+namespace WebClient.Infrastructure.Gateway {
+	public class SearchContainGateway : IGateway
     {
         private HttpClient _client;
         private IConfiguration _configuration;
@@ -24,8 +21,7 @@ namespace WebClient.Infrastructure.Gateway
         {
             var conntectionStr = _configuration.GetConnectionString("DefaultConnection");
 
-            var httpRequestMessage
-               = new HttpRequestMessage(HttpMethod.Post, new Uri(conntectionStr + "DataSearchContainLB"));
+			var client = new RestClient();
 
             var response = await _client.SendAsync(httpRequestMessage);
 
