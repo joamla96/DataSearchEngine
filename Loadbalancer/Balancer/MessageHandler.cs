@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Loadbalancer.Balancer {
 	public class MessageHandler {
+
 		private ManualResetEvent _resetEvent = new ManualResetEvent(false);
 
 		private ILoadBalancer loadBalancer;
@@ -16,7 +17,7 @@ namespace Loadbalancer.Balancer {
 
 		private Log Log;
 
-		// TODO Handle disconnected instances
+
 
 		public MessageHandler(ILoadBalancer loadBalancer, Log log) {
 			this.loadBalancer = loadBalancer;
@@ -28,9 +29,9 @@ namespace Loadbalancer.Balancer {
 		}
 
 		private void Start() {
-			using (bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false")) {
+			using (bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;username=user;password=user")) {
 				// Listen for order request messages from customers
-				bus.Receive<IServiceOptions>("DataSearchContainInstances", input => OnNewInstance(input));
+				bus.Receive<Uri>("DataSearchContainInstances", input => OnNewInstance(input));
 
 				_resetEvent.WaitOne(); // Block thread
 			}
@@ -44,27 +45,53 @@ namespace Loadbalancer.Balancer {
 		}
 
 		private void ExecuteHealthCheck() {
+			//Log.Write("loadbalancer_hc", "Executing HealthCheck");
 			var serviceOptions = loadBalancer.GetInstances();
 
-			Parallel.ForEach(serviceOptions, (option) => {
-				var client = new RestClient(new Uri(option.Host.ToUriComponent()));
-				var request = new RestRequest("Healthcheck", Method.GET);
-
-				var result = client.Execute(request);
-
-				if (result.ResponseStatus == ResponseStatus.TimedOut)
+			foreach(var option in serviceOptions) {
+				if(!this.Healthcheck(option))
+				{
 					OnInstanceDC(option);
-			});
+				}
+			}
 		}
 
-		private void OnNewInstance(IServiceOptions instance) {
-			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.ServiceId));
+		private bool Healthcheck(Uri option)
+		{
+			Log.Write("loadbalancer_hc", "Checking " + option.Host);
+			string basePath = option.Scheme + "://" + option.Host + ":" + option.Port;
+			var client = new RestClient(basePath);
+			client.Timeout = 3000;
+			var request = new RestRequest("api/Healthcheck", Method.GET);
+
+			var result = client.Execute(request);
+
+			if (!result.IsSuccessful)
+			{
+				Log.Write("loadbalancer_hc", option.Host + " timed out.");
+				return false;
+			}
+
+			Log.Write("loadbalancer_hc", option.Host + " is still alive.");
+			return true;
+		}
+
+		private void OnNewInstance(Uri instance) {
+
+			if(!this.Healthcheck(instance))
+			{
+				Thread.Sleep(5000);
+				if (!this.Healthcheck(instance))
+					return;
+			}
+
+			Log.Write("loadbalancer", String.Format("Instance {0} came alive", instance.Host));
 			loadBalancer.AddInstance(instance);
 		}
 
 
-		private void OnInstanceDC(IServiceOptions service) {
-			Log.Write("loadbalancer", String.Format("Instance {0} died", service.ServiceId));
+		private void OnInstanceDC(Uri service) {
+			Log.Write("loadbalancer", String.Format("Instance {0} died", service.Host));
 			loadBalancer.RemoveInstance(service);
 		}
 	}

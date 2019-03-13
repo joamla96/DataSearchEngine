@@ -7,7 +7,7 @@ namespace Common.Logger {
 		private IBus bus;
 
 		public Log() {
-			bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;persistentMessages=false");
+			bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;username=user;password=user");
 		}
 
 		public void Write(string serviceName, string message) {
@@ -15,7 +15,7 @@ namespace Common.Logger {
 		}
 
 		public void Write(LogEntryDTO entry) {
-			bus.Publish(entry);
+			bus.Publish(entry, "log");
 		}
 
 		public void Dispose() {

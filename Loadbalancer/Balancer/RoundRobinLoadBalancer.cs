@@ -13,22 +13,21 @@ namespace Loadbalancer.Balancer
 		/// <summary>
 		/// List of services in the loadbalancer
 		/// </summary>
-		private List<IServiceOptions> serviceOptions = new List<IServiceOptions>();
+		private List<Uri> serviceOptions = new List<Uri>();
 
 		/// <summary>
 		/// Counter for which item in the load balancer to access
 		/// </summary>
 		private int lastRequest = 0;
-		public IServiceOptions Next()
+		public Uri Next()
 		{
 			if (serviceOptions.Count == 0)
 				throw new Exception("No Service Options Defined"); // TODO Custom Exception
 
-			++lastRequest;
-			if (lastRequest > serviceOptions.Count)
+			if (lastRequest >= serviceOptions.Count)
 				lastRequest = 0;
 
-			return serviceOptions[lastRequest];
+			return serviceOptions[lastRequest++];
 
 		}
 
@@ -36,7 +35,7 @@ namespace Loadbalancer.Balancer
 		/// Add an item to the list of possible services
 		/// </summary>
 		/// <param name="item">itme to add</param>
-		public void AddInstance(IServiceOptions item)
+		public void AddInstance(Uri item)
 		{
 			serviceOptions.Add(item);
 		}
@@ -45,12 +44,12 @@ namespace Loadbalancer.Balancer
 		/// Remove item from the list of possible services
 		/// </summary>
 		/// <param name="item">item to remove</param>
-		public void RemoveInstance(IServiceOptions item)
+		public void RemoveInstance(Uri item)
 		{
 			serviceOptions.Remove(item);
 		}
 
-		public IEnumerable<IServiceOptions> GetInstances() {
+		public IEnumerable<Uri> GetInstances() {
 			return serviceOptions.ToList();
 		}
 	}
