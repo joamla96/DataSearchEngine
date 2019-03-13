@@ -1,4 +1,5 @@
 ﻿using EasyNetQ;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,15 @@ namespace Loadbalancer.Balancer
 	public class RoundRobinLoadBalancer
 		: ILoadBalancer
 	{
+		public RoundRobinLoadBalancer(IConfiguration configuration) {
+			List<string> apis = configuration.GetSection("API").Get<List<string>>();
+
+			foreach(var api in apis) {
+				var uri = new Uri(api);
+				serviceOptions.Add(uri);
+			}
+		}
+
 		/// <summary>
 		/// List of services in the loadbalancer
 		/// </summary>

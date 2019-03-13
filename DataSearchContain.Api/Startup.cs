@@ -26,15 +26,6 @@ namespace DataSearchContain.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-			IPAddress[] addresslist = Dns.GetHostAddresses(Dns.GetHostName());
-			IBus bus;
-
-			var me = new Uri(String.Format("http://{0}/api/SearchContain", addresslist[0]));
-
-			using(bus = RabbitHutch.CreateBus("host=ssh.jalawebs.com;username=user;password=user")) {
-				bus.Send("DataSearchContainInstances", me);
-			}
         }
 
         public IConfiguration Configuration { get; }

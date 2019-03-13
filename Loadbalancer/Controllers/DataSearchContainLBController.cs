@@ -17,14 +17,10 @@ namespace Loadbalancer.Controllers
     public class DataSearchContainLBController : ControllerBase
     {
 		private ILoadBalancer loadBalancer;
-		private Log Log;
-		private MessageHandler msgHandler;
 
-		public DataSearchContainLBController(ILoadBalancer loadBalancer, Log log, MessageHandler messageHandler)
+		public DataSearchContainLBController(ILoadBalancer loadBalancer)
 		{
 			this.loadBalancer = loadBalancer;
-			this.Log = log;
-			this.msgHandler = messageHandler;
 		}
 		
 		[HttpGet]
@@ -47,7 +43,7 @@ namespace Loadbalancer.Controllers
 			var result = await client.ExecuteTaskAsync(request); // IDEA: In case of exception or other, repeat request to another service?
 			timera.Stop();
 
-			Log.Write("loadbalancer", String.Format("Request to service {0} took {1} ms", server.Host, timera.ElapsedMilliseconds));
+			//Log.Write("loadbalancer", String.Format("Request to service {0} took {1} ms", server.Host, timera.ElapsedMilliseconds));
 
 			if(!result.IsSuccessful) 
 				return StatusCode((int)result.StatusCode, result.StatusDescription);
