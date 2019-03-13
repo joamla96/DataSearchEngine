@@ -5,6 +5,6 @@ using System.Threading.Tasks;
 
 namespace Loadbalancer.Models {
 	public class SearchQuerryDTO {
-		public string Querry { get; set; }
+		public string Quarry { get; set; }
 	}
 }

@@ -31,12 +31,12 @@ namespace Loadbalancer.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]SearchQuerryDTO item)
         {
-			if (item.Querry == null)
+			if (item.Quarry == null)
 				return BadRequest();
 
 			var server = this.loadBalancer.Next();
 			var client = new RestClient(server);
-			var request = new RestRequest(server.PathAndQuery, Method.POST);
+			var request = new RestRequest(Method.POST);
 			request.AddJsonBody(item);
 
 			var timera = Stopwatch.StartNew();

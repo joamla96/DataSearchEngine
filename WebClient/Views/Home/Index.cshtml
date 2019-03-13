@@ -1,4 +1,4 @@
-﻿@model SearchViewModel
+﻿@model IEnumerable<SearchViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -19,10 +19,13 @@
 
 <div>
     <ul>
-        @foreach (var results in Model.SearchResults)
-        {
-            <li>@results</li>
+        @foreach (var result in Model) {
+
+            <li>@result.SearchResults</li>
+            <li>@result.timer.ElapsedMilliseconds ms</li>
         }
+
+        <li>Total Time: @ViewBag.TotalTime</li>
     </ul>
 </div>
 

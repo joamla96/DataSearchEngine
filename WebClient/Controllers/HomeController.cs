@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebClient.Application.Commands.SearchContains;
@@ -22,7 +23,7 @@ namespace WebClient.Controllers
         SearchViewModel model = new SearchViewModel();
         public IActionResult Index()
         {
-            return View(model);
+            return View(new List<SearchViewModel>());
         }
 
         public IActionResult Privacy()
@@ -38,9 +39,24 @@ namespace WebClient.Controllers
         
         public async Task<IActionResult> SearchAnQuarry(string search)
         {
-            model.SearchResults = await _mediator.Send<List<String>>(new SearchContainCommand(search));
+			var results = new List<SearchViewModel>();
 
-            return View("Index",model);
+			var totalTimer = new Stopwatch();
+			totalTimer.Start();
+			
+			for (int i = 0; i < 10; i++) {
+				var model = new SearchViewModel();
+				model.timer.Start();
+				model.SearchResults = await _mediator.Send<List<String>>(new SearchContainCommand(search));
+				model.timer.Stop();
+				results.Add(model);
+			}
+
+			totalTimer.Stop();
+
+			ViewData["TotalTime"] = totalTimer.ElapsedMilliseconds;
+
+            return View("Index",results);
         }
     }
 }

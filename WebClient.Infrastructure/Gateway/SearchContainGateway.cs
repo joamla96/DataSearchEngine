@@ -14,7 +14,7 @@ namespace WebClient.Infrastructure.Gateway
     {
         private IConfiguration _configuration;
 
-        public SearchContainGateway(IConfiguration configuration)
+        public SearchContainGateway(HttpClient notneeded, IConfiguration configuration)
         {
             _configuration = configuration;
         }
