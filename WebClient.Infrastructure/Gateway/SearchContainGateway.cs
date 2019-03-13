@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using WebClient.Domain.Gateway;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using RestSharp;
 
-namespace WebClient.Infrastructure.Gateway {
-	public class SearchContainGateway : IGateway
+namespace WebClient.Infrastructure.Gateway
+{
+    public class SearchContainGateway : IGateway
     {
-        private HttpClient _client;
         private IConfiguration _configuration;
 
-        public SearchContainGateway(HttpClient client, IConfiguration configuration)
+        public SearchContainGateway(IConfiguration configuration)
         {
-            _client = client;
             _configuration = configuration;
         }
 
@@ -21,14 +23,16 @@ namespace WebClient.Infrastructure.Gateway {
         {
             var conntectionStr = _configuration.GetConnectionString("DefaultConnection");
 
-			var client = new RestClient();
+			var client = new RestClient(conntectionStr);
+			var request = new RestRequest("DataSearchContainLB", Method.POST, DataFormat.Json);
+			request.AddJsonBody(new { Quarry = word });
 
-            var response = await _client.SendAsync(httpRequestMessage);
+			var response = await client.ExecuteTaskAsync(request);
 
-            if (!response.IsSuccessStatusCode)
+            if (!response.IsSuccessful)
                 throw new Exception("No response");
 
-            var body = await response.Content.ReadAsStringAsync();
+			var body = response.Content;
 
             return JsonConvert.DeserializeObject<bool>(body);
         }
