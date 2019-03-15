@@ -17,7 +17,7 @@ namespace DataSearchContain.Infrastructure.UnitOfWork.Reposetory
 
 		public async Task<bool> WordExist(string word)
         {
-			Thread.Sleep(5000);
+			Thread.Sleep(500);
             return true;
         }
     }
