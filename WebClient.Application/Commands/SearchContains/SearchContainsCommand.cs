@@ -40,8 +40,14 @@ namespace WebClient.Application.Commands.SearchContains
             if (cancellationToken == null)
                 throw new ArgumentNullException(nameof(cancellationToken));
 
-            var result = await _Gateway.WordExist(request.Request);
-            return new List<string>() { request.Request, result.ToString()};
+			try {
+
+				var result = await _Gateway.WordExist(request.Request);
+				return new List<string>() { request.Request, result.ToString() };
+
+			} catch(Exception e) {
+				return new List<string>() { request.Request, e.Message };
+			}
         }
     }
 }
